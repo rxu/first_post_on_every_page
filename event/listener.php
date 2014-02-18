@@ -87,17 +87,13 @@ class listener implements EventSubscriberInterface
 		$topic_data = $event['topic_data'];
 		$sql_ary = $event['sql_ary'];
 
-		if($topic_data['topic_first_post_show'] && ($start != 0))
+		if($topic_data['topic_first_post_show'] && !in_array((int) $topic_data['topic_first_post_id'], $post_list))
 		{
-			if ($store_reverse)
+			foreach ($post_list as $key => $value)
 			{
-				array_unshift($post_list, (int) $topic_data['topic_first_post_id']);
-				sort($post_list);
+				$post_list[$key+1] = $value;
 			}
-			else
-			{
-				$post_list = array_merge(array((int) $topic_data['topic_first_post_id']), $post_list);
-			}
+			$post_list[0] = (int) $topic_data['topic_first_post_id'];
 		}
 
 		$sql_ary['WHERE'] = $this->db->sql_in_set('p.post_id', $post_list) . ' AND u.user_id = p.poster_id';
