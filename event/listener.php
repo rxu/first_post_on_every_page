@@ -82,12 +82,11 @@ class listener implements EventSubscriberInterface
 
 	public function modify_viewtopic_post_list($event)
 	{
-		global $store_reverse, $start;
 		$post_list = $event['post_list'];
 		$topic_data = $event['topic_data'];
 		$sql_ary = $event['sql_ary'];
 
-		if($topic_data['topic_first_post_show'] && !in_array((int) $topic_data['topic_first_post_id'], $post_list))
+		if($topic_data['topic_first_post_show'] && ($post_list[0] != (int) $topic_data['topic_first_post_id']))
 		{
 			foreach ($post_list as $key => $value)
 			{
