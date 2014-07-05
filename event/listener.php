@@ -42,6 +42,9 @@ class listener implements EventSubscriberInterface
 			'core.submit_post_end'				=> 'first_post_sticky',
 			'core.viewtopic_get_post_data'		=> 'modify_viewtopic_post_list',
 			'core.posting_modify_template_vars'	=> 'modify_posting_template_vars',
+			'core.acp_manage_forums_initialise_data'		=> 'acp_manage_forums_initialise_data',
+			'core.acp_manage_forums_request_data'			=> 'acp_manage_forums_request_data',
+			'core.acp_manage_forums_display_form'			=> 'acp_manage_forums_display_form',
 		);
 	}
 
@@ -49,8 +52,8 @@ class listener implements EventSubscriberInterface
 	{
 		$data = $event['data'];
 		$post_data = $event['post_data'];
-
-		$data['topic_first_post_show'] = (isset($post_data['topic_first_post_show'])) ? $post_data['topic_first_post_show'] : 0;
+        $first_post_always_show = isset($post_data['first_post_always_show']) && $post_data['first_post_always_show'] == 1;
+		$data['topic_first_post_show'] = $first_post_always_show || (isset($post_data['topic_first_post_show'])) ? $post_data['topic_first_post_show'] : 0;
 		$data['topic_poster'] = (!empty($post_data['topic_poster'])) ? : '';
 
 		$event['data'] = $data;
@@ -64,11 +67,12 @@ class listener implements EventSubscriberInterface
 		$topic_id = $data['topic_id'];
 		$forum_id = $data['forum_id'];
 
-		$topic_first_post_show = (isset($_POST['topic_first_post_show'])) ? true : false;
+        $first_post_always_show = isset($post_data['first_post_always_show']) && $post_data['first_post_always_show'] == 1;
+		$topic_first_post_show = $first_post_always_show ||  (isset($_POST['topic_first_post_show'])) ? true : false;
 		// Show/Unshow first post on every page
 		if(($mode == 'edit' && $post_id == $data['topic_first_post_id']) || $mode == 'post')
 		{
-			$perm_show_unshow = ($this->auth->acl_get('m_lock', $forum_id) || ($this->auth->acl_get('f_user_lock', $forum_id) && $this->user->data['is_registered'] && !empty($data['topic_poster']) && $user->data['user_id'] == $data['topic_poster'])) ? true : false;
+			$perm_show_unshow =  $first_post_always_show ||  ($this->auth->acl_get('m_lock', $forum_id) || ($this->auth->acl_get('f_user_lock', $forum_id) && $this->user->data['is_registered'] && !empty($data['topic_poster']) && $user->data['user_id'] == $data['topic_poster'])) ? true : false;
 
 			if($data['topic_first_post_show'] != $topic_first_post_show && $perm_show_unshow)
 			{
@@ -86,7 +90,7 @@ class listener implements EventSubscriberInterface
 		$topic_data = $event['topic_data'];
 		$sql_ary = $event['sql_ary'];
 
-		if($topic_data['topic_first_post_show'] && ($post_list[0] != (int) $topic_data['topic_first_post_id']))
+		if( ($topic_data['first_post_always_show']  || $topic_data['topic_first_post_show']) && ($post_list[0] != (int) $topic_data['topic_first_post_id']))
 		{
 			foreach ($post_list as $key => $value)
 			{
@@ -113,11 +117,46 @@ class listener implements EventSubscriberInterface
 		{
 			$first_post_show_allowed = true;
 		}
-
+        $first_post_always_show = isset($post_data['first_post_always_show']) && $post_data['first_post_always_show'] == 1;
 		$first_post_show_checked = (isset($post_data['topic_first_post_show'])) ? $post_data['topic_first_post_show'] : 0;
 		$this->template->assign_vars(array(
-			'S_FIRST_POST_SHOW_ALLOWED'		=> ($first_post_show_allowed  && ($this->auth->acl_get('m_lock', $forum_id) || ($this->auth->acl_get('f_user_lock', $forum_id) && $this->user->data['is_registered'] && !empty($post_data['topic_poster']) && $this->user->data['user_id'] == $post_data['topic_poster']))) ? true : false,
-			'S_FIRST_POST_SHOW_CHECKED'		=> ($first_post_show_checked) ? ' checked="checked"' : '',
+			'S_FIRST_POST_SHOW_ALLOWED'		=> $first_post_always_show || ($first_post_show_allowed  && ($this->auth->acl_get('m_lock', $forum_id) || ($this->auth->acl_get('f_user_lock', $forum_id) && $this->user->data['is_registered'] && !empty($post_data['topic_poster']) && $this->user->data['user_id'] == $post_data['topic_poster']))) ? true : false,
+			'S_FIRST_POST_SHOW_CHECKED'		=> $first_post_always_show ||($first_post_show_checked) ? ' checked="checked"' : '',
+			'S_FIRST_POST_SHOW_READONLY'		=>  $first_post_always_show ? ' disabled="disabled"' : '',
 		));
 	}
+    
+    #region ACP functions
+    public function acp_manage_forums_initialise_data($event)
+	{
+		$forum_data = $event['forum_data'];
+		$forum_data += array(
+			'first_post_always_show'	=> 0,
+		);
+
+		$event['forum_data'] = $forum_data;
+	}
+	public function acp_manage_forums_request_data($event)
+	{
+		$forum_data = $event['forum_data'];
+
+		$forum_data += array(
+			'first_post_always_show'	=> request_var('first_post_always_show', 0),
+		);
+
+		$event['forum_data'] = $forum_data;
+	}
+	public function acp_manage_forums_display_form($event)
+	{
+		$forum_data = $event['forum_data'];
+		$template_data = $event['template_data'];
+
+		$template_data += array(
+			'S_FIRST_POST_ALWAYS_SHOW'	=> $forum_data['first_post_always_show'],
+		);
+
+		$event['template_data'] = $template_data;
+	}
+
+    #endregion
 }
