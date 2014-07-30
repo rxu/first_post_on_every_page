@@ -19,7 +19,7 @@
     "extra": {
         "display-name": "First post on every page",
         "soft-require": {
-		    "phpbb/phpbb": "3.1.*@dev"
+            "phpbb/phpbb": "3.1.*@dev"
         }
     }
 }
