@@ -47,18 +47,14 @@ class listener implements EventSubscriberInterface
 
 	public function modify_posting_data($event)
 	{
-		$data = $event['data'];
 		$post_data = $event['post_data'];
-
-		$data['topic_first_post_show'] = (isset($post_data['topic_first_post_show'])) ? $post_data['topic_first_post_show'] : 0;
-		$data['topic_poster'] = (!empty($post_data['topic_poster'])) ? : '';
-
-		$event['data'] = $data;
+		$post_data['topic_first_post_show'] = (isset($post_data['topic_first_post_show'])) ? $post_data['topic_first_post_show'] : 0;
+		$event['post_data'] = $post_data;
 	}
 
 	public function first_post_sticky($event)
 	{
-		global $mode;
+		global $mode, $post_data;
 		$data = $event['data'];
 		$post_id = $data['post_id'];
 		$topic_id = $data['topic_id'];
@@ -66,11 +62,11 @@ class listener implements EventSubscriberInterface
 
 		$topic_first_post_show = (isset($_POST['topic_first_post_show'])) ? true : false;
 		// Show/Unshow first post on every page
-		if(($mode == 'edit' && $post_id == $data['topic_first_post_id']) || $mode == 'post')
+		if (($mode == 'edit' && $post_id == $data['topic_first_post_id']) || $mode == 'post')
 		{
-			$perm_show_unshow = ($this->auth->acl_get('m_lock', $forum_id) || ($this->auth->acl_get('f_user_lock', $forum_id) && $this->user->data['is_registered'] && !empty($data['topic_poster']) && $user->data['user_id'] == $data['topic_poster'])) ? true : false;
+			$perm_show_unshow = ($this->auth->acl_get('m_lock', $forum_id) || ($this->auth->acl_get('f_user_lock', $forum_id) && $this->user->data['is_registered'] && !empty($data['topic_poster']) && $this->user->data['user_id'] == $data['topic_poster'])) ? true : false;
 
-			if($data['topic_first_post_show'] != $topic_first_post_show && $perm_show_unshow)
+			if ($post_data['topic_first_post_show'] != $topic_first_post_show && $perm_show_unshow)
 			{
 				$sql = 'UPDATE ' . TOPICS_TABLE . '
 					SET topic_first_post_show = ' . (($topic_first_post_show) ? 1 : 0) . " 
@@ -86,7 +82,7 @@ class listener implements EventSubscriberInterface
 		$topic_data = $event['topic_data'];
 		$sql_ary = $event['sql_ary'];
 
-		if($topic_data['topic_first_post_show'] && ($post_list[0] != (int) $topic_data['topic_first_post_id']))
+		if ($topic_data['topic_first_post_show'] && ($post_list[0] != (int) $topic_data['topic_first_post_id']))
 		{
 			foreach ($post_list as $key => $value)
 			{
@@ -109,7 +105,7 @@ class listener implements EventSubscriberInterface
 
 		// Do show show first post on every page checkbox only in first post
 		$first_post_show_allowed = false;
-		if(($mode == 'edit' && $post_id == $post_data['topic_first_post_id']) || $mode == 'post')
+		if (($mode == 'edit' && $post_id == $post_data['topic_first_post_id']) || $mode == 'post')
 		{
 			$first_post_show_allowed = true;
 		}
