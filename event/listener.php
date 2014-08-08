@@ -99,7 +99,10 @@ class listener implements EventSubscriberInterface
 
 	public function modify_posting_template_vars($event)
 	{
-		global $post_data, $mode, $forum_id, $post_id;
+		$post_data = $event['post_data'];
+		$mode = $event['mode'];
+		$forum_id = $event['forum_id'];
+		$post_id = $event['post_id'];
 
 		$this->user->add_lang_ext('rxu/first_post_on_every_page', 'first_post_on_every_page');
 
