@@ -1,5 +1,5 @@
 {
-    "name": "rxu/first_post_on_every_page",
+    "name": "rxu/FirstPostOnEveryPage",
     "type": "phpbb-extension",
     "description": "Allows to show first post of topic on top of its every page.",
     "homepage": "http://www.phpbbguru.net",

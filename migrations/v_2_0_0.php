@@ -1,13 +1,13 @@
 <?php
 /**
 *
-* @package first_post_on_every_page
+* @package FirstPostOnEveryPage
 * @copyright (c) 2014 rxu
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
 
-namespace rxu\first_post_on_every_page\migrations;
+namespace rxu\FirstPostOnEveryPage\migrations;
 
 class v_2_0_0 extends \phpbb\db\migration\migration
 {
@@ -34,7 +34,7 @@ class v_2_0_0 extends \phpbb\db\migration\migration
 
 	public function revert_schema()
 	{
-		return 	array(	
+		return 	array(
 			'drop_columns' => array(
 				$this->table_prefix . 'topics' => array('topic_first_post_show'),
 			),

@@ -1,20 +1,20 @@
 <?php
 /**
  *
- * @package first_post_on_every_page
+ * @package FirstPostOnEveryPage
  * @copyright (c) 2014 Ruslan Uzdenov (rxu)
  * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
  *
  */
 
-namespace rxu\first_post_on_every_page\event;
+namespace rxu\FirstPostOnEveryPage\event;
 
 /**
 * @ignore
 */
 if (!defined('IN_PHPBB'))
 {
-    exit;
+	exit;
 }
 
 /**
@@ -24,16 +24,16 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
 {
-    public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext)
-    {
-        $this->template = $template;
-        $this->user = $user;
+	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext)
+	{
+		$this->template = $template;
+		$this->user = $user;
 		$this->auth = $auth;
 		$this->db = $db;
 		$this->config = $config;
 		$this->phpbb_root_path = $phpbb_root_path;
 		$this->php_ext = $php_ext;
-    }
+	}
 
 	static public function getSubscribedEvents()
 	{
@@ -104,7 +104,7 @@ class listener implements EventSubscriberInterface
 		$forum_id = $event['forum_id'];
 		$post_id = $event['post_id'];
 
-		$this->user->add_lang_ext('rxu/first_post_on_every_page', 'first_post_on_every_page');
+		$this->user->add_lang_ext('rxu/FirstPostOnEveryPage', 'first_post_on_every_page');
 
 		// Do show show first post on every page checkbox only in first post
 		$first_post_show_allowed = false;

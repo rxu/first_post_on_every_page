@@ -1,6 +1,6 @@
 services:
-    rxu.first_post_on_every_page.listener:
-        class: rxu\first_post_on_every_page\event\listener
+    rxu.FirstPostOnEveryPage.listener:
+        class: rxu\FirstPostOnEveryPage\event\listener
         arguments:
             - @config
             - @dbal.conn
