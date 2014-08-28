@@ -30,27 +30,21 @@ class listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return array(
-			'core.modify_submit_post_data'		=> 'modify_posting_data',
 			'core.submit_post_end'				=> 'first_post_sticky',
 			'core.viewtopic_get_post_data'		=> 'modify_viewtopic_post_list',
 			'core.posting_modify_template_vars'	=> 'modify_posting_template_vars',
 		);
 	}
 
-	public function modify_posting_data($event)
-	{
-		$post_data = $event['post_data'];
-		$post_data['topic_first_post_show'] = (isset($post_data['topic_first_post_show'])) ? $post_data['topic_first_post_show'] : 0;
-		$event['post_data'] = $post_data;
-	}
-
 	public function first_post_sticky($event)
 	{
-		global $mode, $post_data;
+		global $post_data;
 		$data = $event['data'];
 		$post_id = $data['post_id'];
 		$topic_id = $data['topic_id'];
 		$forum_id = $data['forum_id'];
+		$mode = $event['mode'];
+		$post_data['topic_first_post_show'] = (isset($post_data['topic_first_post_show'])) ? $post_data['topic_first_post_show'] : 0;
 
 		$topic_first_post_show = (isset($_POST['topic_first_post_show'])) ? true : false;
 		// Show/Unshow first post on every page
