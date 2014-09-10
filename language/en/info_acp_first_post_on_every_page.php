@@ -14,7 +14,7 @@
 */
 if (!defined('IN_PHPBB'))
 {
-   exit;
+	exit;
 }
 
 if (empty($lang) || !is_array($lang))
@@ -38,4 +38,3 @@ $lang = array_merge($lang, array(
 	'FIRST_POST_ALWAYS_SHOW'		=> 'Always show first post on top of every page in forum topics',
 	'FIRST_POST_ALWAYS_SHOW_EXPLAIN'		=> 'If enabled, the first post will be displayed on every page for every topic in the forum',
 ));
-
