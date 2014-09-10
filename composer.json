@@ -3,8 +3,8 @@
     "type": "phpbb-extension",
     "description": "Allows to show first post of topic on top of its every page.",
     "homepage": "http://www.phpbbguru.net",
-    "version": "2.0.0",
-    "time": "2014-02-17",
+    "version": "2.0.1",
+    "time": "2014-09-11",
     "license": "GPL-2.0",
     "authors": [
         {
