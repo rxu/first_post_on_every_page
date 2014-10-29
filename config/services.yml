@@ -2,12 +2,9 @@ services:
     rxu.FirstPostOnEveryPage.listener:
         class: rxu\FirstPostOnEveryPage\event\listener
         arguments:
-            - @config
             - @dbal.conn
             - @auth
             - @template
             - @user
-            - %core.root_path%
-            - %core.php_ext%
         tags:
             - { name: event.listener }

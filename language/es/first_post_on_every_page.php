@@ -1,11 +1,10 @@
 <?php
-/** 
+/**
 *
-* first_post_on_every_page [Spanish]
+* First Post On Every Page extension for the phpBB Forum Software package.
 *
-* @package first_post_on_every_page
-* @copyright (c) 2014 Ruslan Uzdenov (rxu)
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
@@ -35,5 +34,5 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
-	'FIRST_POST_SHOW'		=> 'Mostrar en la parte superior de cada página',
+	'FIRST_POST_SHOW'	=> 'Mostrar en la parte superior de cada página',
 ));

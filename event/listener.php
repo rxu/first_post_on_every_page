@@ -1,11 +1,12 @@
 <?php
 /**
- *
- * @package FirstPostOnEveryPage
- * @copyright (c) 2014 Ruslan Uzdenov (rxu)
- * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
- *
- */
+*
+* First Post On Every Page extension for the phpBB Forum Software package.
+*
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
+*
+*/
 
 namespace rxu\FirstPostOnEveryPage\event;
 
@@ -16,26 +17,46 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class listener implements EventSubscriberInterface
 {
-	public function __construct(\phpbb\config\config $config, \phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext)
+	/** @var \phpbb\db\driver\driver_interface */
+	protected $db;
+
+	/** @var \phpbb\auth\auth */
+	protected $auth;
+
+	/** @var \phpbb\template\template */
+	protected $template;
+
+	/** @var \phpbb\user */
+	protected $user;
+
+	/**
+	* Constructor
+	*
+	* @param \phpbb\db\driver\driver_interface    $db               DBAL object
+	* @param \phpbb\auth\auth                     $auth             User object
+	* @param \phpbb\template\template             $template         User object
+	* @param \phpbb\user                          $user             User object
+	* @return \rxu\FirstPostOnEveryPage\event\listener
+	* @access public
+	*/
+	public function __construct(\phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext)
 	{
 		$this->template = $template;
 		$this->user = $user;
 		$this->auth = $auth;
 		$this->db = $db;
 		$this->config = $config;
-		$this->phpbb_root_path = $phpbb_root_path;
-		$this->php_ext = $php_ext;
 	}
 
 	static public function getSubscribedEvents()
 	{
 		return array(
-			'core.submit_post_end'				=> 'first_post_sticky',
-			'core.viewtopic_get_post_data'		=> 'modify_viewtopic_post_list',
-			'core.posting_modify_template_vars'	=> 'modify_posting_template_vars',
-			'core.acp_manage_forums_initialise_data'		=> 'acp_manage_forums_initialise_data',
-			'core.acp_manage_forums_request_data'			=> 'acp_manage_forums_request_data',
-			'core.acp_manage_forums_display_form'			=> 'acp_manage_forums_display_form',
+			'core.submit_post_end'						=> 'first_post_sticky',
+			'core.viewtopic_get_post_data'				=> 'modify_viewtopic_post_list',
+			'core.posting_modify_template_vars'			=> 'modify_posting_template_vars',
+			'core.acp_manage_forums_initialise_data'	=> 'acp_manage_forums_initialise_data',
+			'core.acp_manage_forums_request_data'		=> 'acp_manage_forums_request_data',
+			'core.acp_manage_forums_display_form'		=> 'acp_manage_forums_display_form',
 		);
 	}
 
@@ -111,7 +132,7 @@ class listener implements EventSubscriberInterface
 		));
 	}
 
-	#region ACP functions
+	// ACP functions
 	public function acp_manage_forums_initialise_data($event)
 	{
 		$forum_data = $event['forum_data'];
@@ -144,5 +165,5 @@ class listener implements EventSubscriberInterface
 
 		$event['template_data'] = $template_data;
 	}
-	#endregion
+	// ACP functions
 }

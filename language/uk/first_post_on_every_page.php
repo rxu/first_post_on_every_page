@@ -1,11 +1,10 @@
 <?php
-/** 
+/**
 *
-* first_post_on_every_page [Ukrainian]
+* First Post On Every Page extension for the phpBB Forum Software package.
 *
-* @package first_post_on_every_page
-* @copyright (c) 2014 Alex Fryschyn (Sherlock)
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
@@ -35,5 +34,5 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
-	'FIRST_POST_SHOW'		=> 'Показувати на кожній сторінці теми',
+	'FIRST_POST_SHOW'	=> 'Показувати на кожній сторінці теми',
 ));

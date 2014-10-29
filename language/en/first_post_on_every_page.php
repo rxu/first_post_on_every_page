@@ -1,11 +1,10 @@
 <?php
-/** 
+/**
 *
-* first_post_on_every_page [English]
+* First Post On Every Page extension for the phpBB Forum Software package.
 *
-* @package first_post_on_every_page
-* @copyright (c) 2014 Ruslan Uzdenov (rxu)
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License 
+* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
