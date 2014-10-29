@@ -33,19 +33,18 @@ class listener implements EventSubscriberInterface
 	* Constructor
 	*
 	* @param \phpbb\db\driver\driver_interface    $db               DBAL object
-	* @param \phpbb\auth\auth                     $auth             User object
-	* @param \phpbb\template\template             $template         User object
+	* @param \phpbb\auth\auth                     $auth             Auth object
+	* @param \phpbb\template\template             $template         Template object
 	* @param \phpbb\user                          $user             User object
 	* @return \rxu\FirstPostOnEveryPage\event\listener
 	* @access public
 	*/
-	public function __construct(\phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user, $phpbb_root_path, $php_ext)
+	public function __construct(\phpbb\db\driver\driver_interface $db, \phpbb\auth\auth $auth, \phpbb\template\template $template, \phpbb\user $user)
 	{
 		$this->template = $template;
 		$this->user = $user;
 		$this->auth = $auth;
 		$this->db = $db;
-		$this->config = $config;
 	}
 
 	static public function getSubscribedEvents()
