@@ -50,6 +50,7 @@ class listener implements EventSubscriberInterface
 	static public function getSubscribedEvents()
 	{
 		return array(
+			'core.modify_submit_post_data'				=> 'modify_posting_data',
 			'core.submit_post_end'						=> 'first_post_sticky',
 			'core.viewtopic_get_post_data'				=> 'modify_viewtopic_post_list',
 			'core.posting_modify_template_vars'			=> 'modify_posting_template_vars',
@@ -57,6 +58,13 @@ class listener implements EventSubscriberInterface
 			'core.acp_manage_forums_request_data'		=> 'acp_manage_forums_request_data',
 			'core.acp_manage_forums_display_form'		=> 'acp_manage_forums_display_form',
 		);
+	}
+
+	public function modify_posting_data($event)
+	{
+		$post_data = $event['post_data'];
+		$post_data['topic_first_post_show'] = (isset($post_data['topic_first_post_show'])) ? $post_data['topic_first_post_show'] : 0;
+		$event['post_data'] = $post_data;
 	}
 
 	public function first_post_sticky($event)
@@ -67,7 +75,6 @@ class listener implements EventSubscriberInterface
 		$topic_id = $data['topic_id'];
 		$forum_id = $data['forum_id'];
 		$mode = $event['mode'];
-		$post_data['topic_first_post_show'] = isset($post_data['topic_first_post_show']);
 
 		$first_post_always_show = (bool) (isset($post_data['first_post_always_show']) && $post_data['first_post_always_show']);
 		$topic_first_post_show = ($first_post_always_show || isset($_POST['topic_first_post_show']));
