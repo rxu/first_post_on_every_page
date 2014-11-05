@@ -36,6 +36,6 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
 $lang = array_merge($lang, array(
-	'FIRST_POST_ALWAYS_SHOW'			=> 'Toujours afficher le premier message en haut de chaque page des sujets du forum',
-	'FIRST_POST_ALWAYS_SHOW_EXPLAIN'	=> 'Si activé, le premier message sera affiché sur chaque page de chaque sujet du forum',
+	'FIRST_POST_ALWAYS_SHOW'			=> 'Toujours afficher le premier message en haut de chaque page des sujets du forum ',
+	'FIRST_POST_ALWAYS_SHOW_EXPLAIN'	=> 'Si activé, le premier message sera affiché sur chaque page de chaque sujet du forum.',
 ));
