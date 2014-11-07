@@ -76,8 +76,7 @@ class listener implements EventSubscriberInterface
 		$forum_id = $data['forum_id'];
 		$mode = $event['mode'];
 
-		$first_post_always_show = (bool) (isset($post_data['first_post_always_show']) && $post_data['first_post_always_show']);
-		$topic_first_post_show = ($first_post_always_show || isset($_POST['topic_first_post_show']));
+		$topic_first_post_show = isset($_POST['topic_first_post_show']);
 		// Show/Unshow first post on every page
 		if (($mode == 'edit' && $post_id == $data['topic_first_post_id']) || $mode == 'post')
 		{
@@ -124,16 +123,19 @@ class listener implements EventSubscriberInterface
 		$this->user->add_lang_ext('rxu/FirstPostOnEveryPage', 'first_post_on_every_page');
 
 		// Do show show first post on every page checkbox only in first post
-		$first_post_show_allowed = false;
-		if (($mode == 'edit' && $post_id == $post_data['topic_first_post_id']) || $mode == 'post')
+		$first_post_show_allowed = $first_post_always_show = false;
+		if ((($mode == 'edit' && $post_id == $post_data['topic_first_post_id']) || $mode == 'post')
+			&& ($this->auth->acl_get('m_lock', $forum_id)
+				|| ($this->auth->acl_get('f_user_lock', $forum_id) && $this->user->data['is_registered'] && !empty($post_data['topic_poster']) && $this->user->data['user_id'] == $post_data['topic_poster'])))
 		{
 			$first_post_show_allowed = true;
+			$first_post_always_show = isset($post_data['first_post_always_show']) && (int) $post_data['first_post_always_show'] == 1;
 		}
-		$first_post_always_show = isset($post_data['first_post_always_show']) && $post_data['first_post_always_show'] == 1;
+
 		$first_post_show_checked = (isset($post_data['topic_first_post_show'])) ? $post_data['topic_first_post_show'] : 0;
 		$this->template->assign_vars(array(
-			'S_FIRST_POST_SHOW_ALLOWED'		=> ($first_post_always_show || ($first_post_show_allowed  && ($this->auth->acl_get('m_lock', $forum_id) || ($this->auth->acl_get('f_user_lock', $forum_id) && $this->user->data['is_registered'] && !empty($post_data['topic_poster']) && $this->user->data['user_id'] == $post_data['topic_poster'])))) ? true : false,
-			'S_FIRST_POST_SHOW_CHECKED'		=> ($first_post_always_show ||$first_post_show_checked) ? ' checked="checked"' : '',
+			'S_FIRST_POST_SHOW_ALLOWED'		=> $first_post_always_show || $first_post_show_allowed,
+			'S_FIRST_POST_SHOW_CHECKED'		=> ($first_post_always_show || $first_post_show_checked) ? ' checked="checked"' : '',
 			'S_FIRST_POST_SHOW_READONLY'	=> ($first_post_always_show) ? ' disabled="disabled"' : '',
 		));
 	}
