@@ -76,7 +76,12 @@ class listener implements EventSubscriberInterface
 		$forum_id = $data['forum_id'];
 		$mode = $event['mode'];
 
+		// Set initial value for the new topic
+		$post_data['topic_first_post_show'] = (isset($post_data['topic_first_post_show'])) ? $post_data['topic_first_post_show'] : 0;
+
+		// Check if the checkbox has been checked
 		$topic_first_post_show = isset($_POST['topic_first_post_show']);
+
 		// Show/Unshow first post on every page
 		if (($mode == 'edit' && $post_id == $data['topic_first_post_id']) || $mode == 'post')
 		{
