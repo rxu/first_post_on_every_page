@@ -7,6 +7,7 @@
 * @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
+
 /**
 * DO NOT CHANGE
 */
@@ -30,6 +31,6 @@ $lang = array();
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 $lang = array_merge($lang, array(
-'FIRST_POST_ALWAYS_SHOW'	=> 'Zeige den ersten Post auf jeder Seite des Themas oben wieder an',
-'FIRST_POST_ALWAYS_SHOW_EXPLAIN'	=> 'Wenn aktiviert wird der erste Post auf jeder Seite des Themas oben wieder angezeigt',
+	'FIRST_POST_ALWAYS_SHOW'	=> 'Zeige den ersten Post auf jeder Seite des Themas oben wieder an',
+	'FIRST_POST_ALWAYS_SHOW_EXPLAIN'	=> 'Wenn aktiviert wird der erste Post auf jeder Seite des Themas oben wieder angezeigt',
 ));

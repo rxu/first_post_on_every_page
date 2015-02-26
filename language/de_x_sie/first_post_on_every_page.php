@@ -7,6 +7,7 @@
 * @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
+
 /**
 * @ignore
 */
@@ -30,5 +31,5 @@ $lang = array();
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 $lang = array_merge($lang, array(
-'FIRST_POST_SHOW'	=> 'Zeige Post am Anfang jeder Seite',
+	'FIRST_POST_SHOW'	=> 'Zeige Post am Anfang jeder Seite',
 ));
