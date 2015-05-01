@@ -85,7 +85,9 @@ class listener implements EventSubscriberInterface
 		// Show/Unshow first post on every page
 		if (($mode == 'edit' && $post_id == $data['topic_first_post_id']) || $mode == 'post')
 		{
-			$perm_show_unshow = ($this->auth->acl_get('m_lock', $forum_id) || ($this->auth->acl_get('f_user_lock', $forum_id) && $this->user->data['is_registered'] && !empty($data['topic_poster']) && $this->user->data['user_id'] == $data['topic_poster'])) ? true : false;
+			$perm_show_unshow = ($this->auth->acl_get('m_lock', $forum_id) ||
+				($this->auth->acl_get('f_user_lock', $forum_id) && $this->user->data['is_registered'] && !empty($post_data['poster_id']) && $this->user->data['user_id'] == $post_data['poster_id'])
+			);
 
 			if ($post_data['topic_first_post_show'] != $topic_first_post_show && $perm_show_unshow)
 			{
@@ -131,7 +133,7 @@ class listener implements EventSubscriberInterface
 		$first_post_show_allowed = $first_post_always_show = false;
 		if ((($mode == 'edit' && $post_id == $post_data['topic_first_post_id']) || $mode == 'post')
 			&& ($this->auth->acl_get('m_lock', $forum_id)
-				|| ($this->auth->acl_get('f_user_lock', $forum_id) && $this->user->data['is_registered'] && !empty($post_data['topic_poster']) && $this->user->data['user_id'] == $post_data['topic_poster'])))
+				|| ($this->auth->acl_get('f_user_lock', $forum_id) && $this->user->data['is_registered'] && !empty($post_data['poster_id']) && $this->user->data['user_id'] == $post_data['poster_id'])))
 		{
 			$first_post_show_allowed = true;
 			$first_post_always_show = isset($post_data['first_post_always_show']) && (int) $post_data['first_post_always_show'] == 1;
