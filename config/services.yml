@@ -4,6 +4,7 @@ services:
         arguments:
             - @dbal.conn
             - @auth
+            - @request
             - @template
             - @user
         tags:
