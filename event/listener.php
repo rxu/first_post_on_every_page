@@ -76,9 +76,9 @@ class listener implements EventSubscriberInterface
 	{
 		global $post_data;
 		$data = $event['data'];
-		$post_id = $data['post_id'];
-		$topic_id = $data['topic_id'];
-		$forum_id = $data['forum_id'];
+		$post_id = (int) $data['post_id'];
+		$topic_id = (int) $data['topic_id'];
+		$forum_id = (int) $data['forum_id'];
 		$mode = $event['mode'];
 
 		// Set initial value for the new topic
