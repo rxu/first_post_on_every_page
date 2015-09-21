@@ -1,12 +1,11 @@
 <?php
 /**
 *
-* First Post On Every Page extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
+* First post on every page extension for the phpBB Forum Software package.
 * French translation by Galixte (http://www.galixte.com)
+*
+* @copyright (c) 2015 phpBB Limited <https://www.phpbb.com>
+* @license GNU General Public License, version 2 (GPL-2.0)
 *
 */
 
@@ -34,8 +33,12 @@ if (empty($lang) || !is_array($lang))
 // You do not need this where single placeholders are used, e.g. 'Message %d' is fine
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
+//
+// Some characters you may want to copy&paste:
+// ’ « » “ ” …
+//
 
 $lang = array_merge($lang, array(
-	'FIRST_POST_ALWAYS_SHOW'			=> 'Toujours afficher le premier message en haut de chaque page des sujets du forum ',
+	'FIRST_POST_ALWAYS_SHOW'			=> 'Toujours afficher le premier message en haut de chaque page des sujets du forum',
 	'FIRST_POST_ALWAYS_SHOW_EXPLAIN'	=> 'Si activé, le premier message sera affiché sur chaque page de chaque sujet du forum.',
 ));
