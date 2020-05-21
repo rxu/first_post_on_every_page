@@ -1,13 +1,14 @@
 <?php
 /**
-*
-* First post on every page extension for the phpBB Forum Software package.
-* French translation by Galixte (http://www.galixte.com)
-*
-* @copyright (c) 2015 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * First Post On Every Page extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ */
 
 /**
 * DO NOT CHANGE
@@ -19,7 +20,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -38,7 +39,7 @@ if (empty($lang) || !is_array($lang))
 // ’ « » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'FIRST_POST_ALWAYS_SHOW'			=> 'Toujours afficher le premier message en haut de chaque page des sujets du forum',
 	'FIRST_POST_ALWAYS_SHOW_EXPLAIN'	=> 'Si activé, le premier message sera affiché sur chaque page de chaque sujet du forum.',
-));
+]);

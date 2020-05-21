@@ -1,3 +1,5 @@
-<!-- IF S_FIRST_POST_SHOW_ALLOWED -->
-	<div><label for="topic_first_post_show"><input type="checkbox" name="topic_first_post_show" id="topic_first_post_show"{S_FIRST_POST_SHOW_CHECKED} {S_FIRST_POST_SHOW_READONLY}/> {L_FIRST_POST_SHOW} </label></div>
-<!-- ENDIF -->
+{% if S_FIRST_POST_SHOW_ALLOWED %}
+	<div>
+		<label for="topic_first_post_show"><input type="checkbox" name="topic_first_post_show" id="topic_first_post_show"{{ S_FIRST_POST_SHOW_CHECKED }} {{ S_FIRST_POST_SHOW_READONLY }}/> {{ lang('FIRST_POST_SHOW') }} </label>
+	</div>
+{% endif %}

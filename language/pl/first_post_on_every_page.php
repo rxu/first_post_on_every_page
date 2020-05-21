@@ -1,12 +1,12 @@
 <?php
 /**
-*
-* First Post On Every Page extension for the phpBB Forum Software package.
-*
-* @copyright (c) 2013 phpBB Limited <https://www.phpbb.com>
-* @license GNU General Public License, version 2 (GPL-2.0)
-*
-*/
+ *
+ * First Post On Every Page extension for the phpBB Forum Software package.
+ *
+ * @copyright (c) 2020, rxu, https://www.phpbbguru.net
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
 /**
 * @ignore
@@ -18,7 +18,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -33,6 +33,6 @@ if (empty($lang) || !is_array($lang))
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'FIRST_POST_SHOW'		=> 'Pokaż post na górze każdej strony',
-));
+]);
