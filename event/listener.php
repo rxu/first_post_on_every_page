@@ -118,10 +118,14 @@ class listener implements EventSubscriberInterface
 
 		if (($topic_data['topic_first_post_show'] || $topic_data['first_post_always_show']) && ($post_list[0] != (int) $topic_data['topic_first_post_id']))
 		{
-			foreach ($post_list as $key => $value)
-			{
-				$post_list[$key+1] = $value;
-			}
+			// Increment $post_list array keys by 1 to add first topic post afterwards
+			$post_ids = array_values($post_list);
+			$incremented_keys = array_map(function($key) {
+				return (int) $key + 1;
+			}, array_keys($post_list));
+			$post_list = array_combine($incremented_keys, $post_ids);
+
+			// Add first topic post to the posts list on a page
 			$post_list[0] = (int) $topic_data['topic_first_post_id'];
 		}
 
