@@ -4,6 +4,7 @@ services:
         arguments:
             - '@auth'
             - '@dbal.conn'
+            - '@content.visibility'
             - '@language'
             - '@request'
             - '@template'
