@@ -23,6 +23,9 @@ class listener implements EventSubscriberInterface
 	/** @var \phpbb\db\driver\driver_interface */
 	protected $db;
 
+	/** @var \phpbb\content_visibility */
+	protected $content_visibility;
+
 	/** @var \phpbb\language\language */
 	protected $language;
 
@@ -40,6 +43,7 @@ class listener implements EventSubscriberInterface
 	 *
 	 * @param \phpbb\auth\auth                     $auth             Auth object
 	 * @param \phpbb\db\driver\driver_interface    $db               DBAL object
+	 * @param \phpbb\content_visibility              $content_visibility Content visibility service
 	 * @param \phpbb\language\language          $language         Language object
 	 * @param \phpbb\request\request_interface     $request          Request object
 	 * @param \phpbb\template\template             $template         Template object
@@ -48,6 +52,7 @@ class listener implements EventSubscriberInterface
 	public function __construct(
 		\phpbb\auth\auth $auth,
 		\phpbb\db\driver\driver_interface $db,
+		\phpbb\content_visibility $content_visibility,
 		\phpbb\language\language $language,
 		\phpbb\request\request_interface $request,
 		\phpbb\template\template $template,
@@ -56,6 +61,7 @@ class listener implements EventSubscriberInterface
 	{
 		$this->auth = $auth;
 		$this->db = $db;
+		$this->content_visibility = $content_visibility;
 		$this->language = $language;
 		$this->request = $request;
 		$this->template = $template;
@@ -129,7 +135,9 @@ class listener implements EventSubscriberInterface
 			$post_list[0] = (int) $topic_data['topic_first_post_id'];
 		}
 
-		$sql_ary['WHERE'] = $this->db->sql_in_set('p.post_id', $post_list) . ' AND u.user_id = p.poster_id';
+		$sql_ary['WHERE'] = $this->db->sql_in_set('p.post_id', $post_list) . '
+			AND ' . $this->content_visibility->get_visibility_sql('post', $topic_data['forum_id'], 'p.') . '
+			AND u.user_id = p.poster_id';
 
 		$event['post_list'] = $post_list;
 		$event['sql_ary'] = $sql_ary;
